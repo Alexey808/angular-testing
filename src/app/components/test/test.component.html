@@ -1,0 +1,15 @@
+
+<div class="container">
+    <h3>Title</h3>
+    <div class="input">
+        <input type="text" />
+    </div>
+    <div class="list">
+        <div *ngFor="let item of (items$ | async)" (click)="onActiveElement(item)" [class.active]="activeElement === item">
+            <div>{{ item }}</div>
+        </div>
+    </div>
+    <div class="test-button">
+        <button (click)="testButtonClick()">testButtonClick</button>
+    </div>
+</div>
