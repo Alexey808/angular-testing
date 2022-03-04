@@ -5,6 +5,7 @@ import { Observable, take } from 'rxjs';
 import { newArray } from '@angular/compiler/src/util';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { InternalCmpComponent } from './internal-cmp/internal-cmp.component';
 
 describe('TestComponent', () => {
   let component: TestComponent;
@@ -114,15 +115,54 @@ describe('TestComponent', () => {
     //   })
     // }));
 
-    it('', waitForAsync(() => {
+    // it('', waitForAsync(() => {
+    //   spyOn(component, 'testButtonClick');
+    //   const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.test-button');
+    //   debugger;
+    //   button.click();
+    //   fixture.whenStable().then(() => {
+    //     expect(component.testButtonClick).toHaveBeenCalled();
+    //   })
+    // }));
+
+    it('', () => {
       spyOn(component, 'testButtonClick');
       const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.test-button');
+      // const button = fixture.debugElement.query(By.css('test-button'));
       debugger;
       button.click();
-      fixture.whenStable().then(() => {
-        expect(component.testButtonClick).toHaveBeenCalled();
-      })
-    }));
+
+      fixture.detectChanges();
+
+      // expect(component.testButtonClick).toHaveBeenCalled();
+      expect(component.testButtonClick).not.toHaveBeenCalled();
+
+    });
 
   });
+
+  // describe('component', () => {
+  //   let fixtureCmp: ComponentFixture<InternalCmpComponent>;
+  //   let componentCmp: InternalCmpComponent;
+  //
+  //   beforeEach(async () => {
+  //     TestBed.configureTestingModule({
+  //       declarations: [ InternalCmpComponent ],
+  //     }).compileComponents();
+  //   });
+  //
+  //   beforeEach(() => {
+  //     TestBed.configureTestingModule({
+  //       declarations: [ InternalCmpComponent ],
+  //     });
+  //     fixtureCmp = TestBed.createComponent(InternalCmpComponent);
+  //     componentCmp = fixtureCmp.componentInstance;
+  //     fixtureCmp.detectChanges();
+  //   });
+  //
+  //   it('has internal component', () => {
+  //     expect(componentCmp).toBeTruthy();
+  //   });
+  // })
+
 });

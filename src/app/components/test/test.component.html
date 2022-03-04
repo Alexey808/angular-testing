@@ -4,12 +4,28 @@
     <div class="input">
         <input type="text" />
     </div>
+
+    <!-- Для тестирования: списков, динамических классов -->
     <div class="list">
-        <div *ngFor="let item of (items$ | async)" (click)="onActiveElement(item)" [class.active]="activeElement === item">
+        <div *ngFor="let item of (items$ | async)"
+             (click)="onActiveElement(item)"
+             [class.active]="activeElement === item">
             <div>{{ item }}</div>
         </div>
     </div>
+    <!-- /Для тестирования: списков, динамических классов -->
+
+    <!-- Для тетстирования: html элемента, события click -->
     <div class="test-button">
         <button (click)="testButtonClick()">testButtonClick</button>
     </div>
+    <!-- /Для тетстирование html элемента, события click, динамических классов -->
+
+    <!-- Для тестирование внутреннего компонента -->
+    <app-internal-cmp></app-internal-cmp>
+    <!-- /Для тестирование внутреннего компонента -->
+
+    <!-- Для тестирование внешнего, модульного компонента -->
+    <app-external-cmp></app-external-cmp>
+    <!-- /Для тестирование внешнего, модульного компонента -->
 </div>
