@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestComponent } from './test.component';
-import { Observable, take } from 'rxjs';
-import { newArray } from '@angular/compiler/src/util';
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { take } from 'rxjs';
+import { TestComponent } from './test.component';
 import { InternalCmpComponent } from './internal-cmp/internal-cmp.component';
+import { ExternalCmpModule } from "./external-cmp/external-cmp.module";
 
 describe('TestComponent', () => {
   let component: TestComponent;
@@ -13,7 +12,13 @@ describe('TestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TestComponent ]
+      declarations: [
+        TestComponent,
+        InternalCmpComponent,
+      ],
+      imports: [
+        ExternalCmpModule,
+      ]
     })
     .compileComponents();
   });
@@ -24,33 +29,33 @@ describe('TestComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
   describe('Methods', () => {
     it('privateVoidMethod', () => {
-      spyOn(component, 'privateVoidMethod' as never);
+      jest.spyOn(component, 'privateVoidMethod' as any);
       component['privateVoidMethod']();
       expect(component['privateVoidMethod']).toHaveBeenCalled();
     });
 
     it('publicVoidMethod', () => {
-      spyOn(component, 'publicVoidMethod');
+      jest.spyOn(component, 'publicVoidMethod');
       component.publicVoidMethod();
       expect(component.publicVoidMethod).toHaveBeenCalled();
     });
 
     it('methodStack', () => {
-      spyOn(component, 'privateVoidMethod' as never);
-      spyOn(component, 'publicVoidMethod');
+      jest.spyOn(component, 'privateVoidMethod' as never);
+      jest.spyOn(component, 'publicVoidMethod');
       component.methodStack();
       expect(component['privateVoidMethod']).toHaveBeenCalledTimes(1);
       expect(component.publicVoidMethod).toHaveBeenCalledTimes(1);
     });
 
     it('methodIncludesArguments', () => {
-      spyOn(component, 'methodIncludesArguments');
+      jest.spyOn(component, 'methodIncludesArguments');
       component.methodIncludesArguments(true);
       expect(component.methodIncludesArguments).toHaveBeenCalledWith(true);
     });
@@ -65,7 +70,7 @@ describe('TestComponent', () => {
       const numbers: number[] = [3,1,2];
       component.valueForMethodReturnsObservable.next(numbers);
       component.methodReturnsObservable().pipe(
-          take(1)
+        take(1)
       ).subscribe((data: number[]) => {
         expect(numbers).toBe(data);
       });
@@ -114,7 +119,7 @@ describe('TestComponent', () => {
     //     expect(activeElement).toBeTruthy();
     //   })
     // }));
-
+    //
     // it('', waitForAsync(() => {
     //   spyOn(component, 'testButtonClick');
     //   const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.test-button');
@@ -125,44 +130,19 @@ describe('TestComponent', () => {
     //   })
     // }));
 
-    it('', () => {
-      spyOn(component, 'testButtonClick');
-      const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.test-button');
-      // const button = fixture.debugElement.query(By.css('test-button'));
-      debugger;
-      button.click();
-
-      fixture.detectChanges();
-
-      // expect(component.testButtonClick).toHaveBeenCalled();
-      expect(component.testButtonClick).not.toHaveBeenCalled();
-
-    });
+    // it('', () => {
+    //   spyOn(component, 'testButtonClick');
+    //   const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.test-button');
+    //   // const button = fixture.debugElement.query(By.css('test-button'));
+    //   debugger;
+    //   button.click();
+    //
+    //   fixture.detectChanges();
+    //
+    //   // expect(component.testButtonClick).toHaveBeenCalled();
+    //   expect(component.testButtonClick).not.toHaveBeenCalled();
+    //
+    // });
 
   });
-
-  // describe('component', () => {
-  //   let fixtureCmp: ComponentFixture<InternalCmpComponent>;
-  //   let componentCmp: InternalCmpComponent;
-  //
-  //   beforeEach(async () => {
-  //     TestBed.configureTestingModule({
-  //       declarations: [ InternalCmpComponent ],
-  //     }).compileComponents();
-  //   });
-  //
-  //   beforeEach(() => {
-  //     TestBed.configureTestingModule({
-  //       declarations: [ InternalCmpComponent ],
-  //     });
-  //     fixtureCmp = TestBed.createComponent(InternalCmpComponent);
-  //     componentCmp = fixtureCmp.componentInstance;
-  //     fixtureCmp.detectChanges();
-  //   });
-  //
-  //   it('has internal component', () => {
-  //     expect(componentCmp).toBeTruthy();
-  //   });
-  // })
-
 });

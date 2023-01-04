@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { InternalCmpComponent } from "./components/test/internal-cmp/internal-cmp.component";
+import { ExternalCmpComponent } from "./components/test/external-cmp/external-cmp.component";
+import { ExternalCmpModule } from "./components/test/external-cmp/external-cmp.module";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
